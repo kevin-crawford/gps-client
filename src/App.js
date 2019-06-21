@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
+import axios from 'axios';
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 //pages
 import home from "./pages/home";
 import login from "./pages/login";
-import signup from "./pages/signup";
 import Navbar from "./components/Navbar";
 import Calculator from "./components/calculator";
 
@@ -31,6 +31,8 @@ const theme = createMuiTheme({
   }
 });
 
+axios.defaults.baseURL = "https://us-central1-gps-client-6e57f.cloudfunctions.net/api";
+
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
@@ -41,7 +43,6 @@ function App() {
             <Switch>
               <Route exact path="/" component={home} />
               <Route exact path="/login" component={login} />
-              <Route exact path="/signup" component={signup} />
               <Route exact path="/calculator" component={Calculator} />
             </Switch>
           </div>
