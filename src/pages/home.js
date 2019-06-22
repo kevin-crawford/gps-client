@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import Customer from '../components/Customer'
+import DatePicker from '../components/DatePicker'
 
 export class home extends Component {
 
@@ -10,7 +11,9 @@ export class home extends Component {
   };
 
   componentDidMount() {
-    axios
+  const token = localStorage.FBIdToken;
+  if(token) {
+      axios
       .get("/customers")
       .then(res => {
         console.log(res.data);
@@ -21,7 +24,12 @@ export class home extends Component {
       .catch(err => {
         console.log(err);
       });
+    } else {
+      window.location.href = "/login"
+    }
   }
+
+
 
   render() {
     let customerMarkup = this.state.customers ? (
@@ -35,7 +43,7 @@ export class home extends Component {
         {customerMarkup}
         </Grid>
         <Grid item sm={4} xs={12}>
-          Loading ...
+          <DatePicker />
         </Grid>
       </Grid>
     );
