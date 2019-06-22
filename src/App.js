@@ -10,6 +10,8 @@ import jwtDecode from 'jwt-decode';
 //redux
 import {Provider} from 'react-redux';
 import store from './redux/store';
+import { SET_AUTHENTICATED } from "./redux/types";
+import { logoutUser, getUserData } from "./redux/actions/userActions";
 
 //pages
 import home from "./pages/home";
@@ -22,19 +24,24 @@ import AuthRoute from './util/AuthRoute';
 
 const theme = createMuiTheme(themeFile);
 
-let authenticated;
+
+axios.defaults.baseURL = "https://us-central1-gps-client-6e57f.cloudfunctions.net/api";
+
 const token = localStorage.FBIdToken;
-if(token) {
+console.log(token);
+
+if (token) {
   const decodedToken = jwtDecode(token);
-  if(decodedToken.exp * 1000 < Date.now()) {
-    window.location.href = '/login'
-    authenticated = false;
+  if (decodedToken.exp * 1000 < Date.now()) {
+    store.dispatch(logoutUser());
+    window.location.href = "/login";
   } else {
-    authenticated = true;
+    store.dispatch({ type: SET_AUTHENTICATED });
+    axios.defaults.headers.common["Authorization"] = token;
+    store.dispatch(getUserData());
   }
 }
 
-axios.defaults.baseURL = "https://us-central1-gps-client-6e57f.cloudfunctions.net/api";
 
 function App() {
   return (
@@ -46,7 +53,7 @@ function App() {
           <div className="container">
             <Switch>
               <Route exact path="/" component={home} />
-              <AuthRoute exact path="/login" component={login} authenticated={authenticated}/>
+              <AuthRoute exact path="/login" component={login} />
               <Route exact path="/calculator" component={Calculator} />
             </Switch>
           </div>

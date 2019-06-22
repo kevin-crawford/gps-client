@@ -10,3 +10,9 @@ export const LOADING_UI = 'LOADING_UI';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 // data reducer types
+
+export const SET_JOBS = 'SET_JOBS';
+export const LOADING_JOBS = 'LOADING_JOBS';
+
+
+
