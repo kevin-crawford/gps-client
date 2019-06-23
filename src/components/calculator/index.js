@@ -1,7 +1,51 @@
 import React, { useState } from "react";
 import calculatePoolVolume from "./calculateHelper";
 
-const Calculator = () => {
+// MUI
+import withStyles from "@material-ui/core/styles/withStyles";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+
+const styles = {
+  form: {
+    textAlign: "center",
+    backgroundColor: "lightblue"
+  },
+  formControl: {
+    margin: 10
+  },
+  group: {
+    margin: 10,
+    display: "flex"
+  },
+  input: {
+    backgroundColor: "white"
+  },
+  image: {
+    margin: "20px auto 20px auto"
+  },
+  pageTitle: {
+    margin: "10px auto 10px auto"
+  },
+  textField: {
+    margin: "10px auto 10px auto"
+  },
+  button: {
+    marginTop: 20
+  },
+  customError: {
+    color: "red",
+    fontSize: "0.8rem"
+  }
+};
+
+const Calculator = props => {
   const [result, updateResult] = useState(0);
   const [width, updateWidth] = useState(0);
   const [width2, updateWidth2] = useState(0);
@@ -13,75 +57,90 @@ const Calculator = () => {
     updateResult(calculatePoolVolume(length, width, width2, depth, shape));
   }
 
+  function handleChange(event) {
+    updateShape(event.target.value);
+  }
+
+  const { classes } = props;
   return (
-    <div className="calculator-container">
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          submitForm(length, width, width2, depth, shape);
-        }}
-      >
-        <h1>Calculator</h1>
-
-        <label>
-          Shape:
-          <select
-            name="shape"
+    <Grid container>
+      <Grid item sm />
+      <Grid item sm>
+        <form
+          className={classes.form}
+          onSubmit={e => {
+            e.preventDefault();
+            submitForm(length, width, width2, depth, shape);
+          }}
+        >
+          <h1>Calculator</h1>
+          <RadioGroup
+            aria-label="Gender"
+            name="gender1"
+            className={classes.group}
             value={shape}
-            onChange={e => updateShape(e.target.value)}
-            onBlur={e => updateShape(e.target.value)}
+            onChange={handleChange}
           >
-            <option value="squareOrRectangle">Square or Rectangle</option>
-            <option value="circular">Circular</option>
-            <option value="kidney">Kidney</option>
-          </select>
-        </label>
-
-        <label>
-          Length(ft):
-          <input
+            <FormControlLabel
+              value="squareOrRectangle"
+              control={<Radio />}
+              label="Square"
+              color="primary"
+            />
+            <FormControlLabel
+              value="circle"
+              control={<Radio />}
+              label="Circle"
+            />
+            <FormControlLabel
+              value="kidney"
+              control={<Radio />}
+              label="Kidney"
+            />
+          </RadioGroup>
+          <TextField
             type="number"
-            id="length"
+            id="pool-length"
             value={length}
+            label="Length(ft)"
             onChange={e => updateLength(e.target.value)}
           />
-        </label>
-        {(shape === "squareOrRectangle" || shape === "kidney") && (
-          <label>
-            Width(ft):
-            <input
+          {(shape === "squareOrRectangle" || shape === "kidney") && (
+            <TextField
               type="number"
               id="width"
               value={width}
+              label="Width(ft)"
               onChange={e => updateWidth(e.target.value)}
             />
-          </label>
-        )}
-        {shape === "kidney" && (
-          <label>
-            Width(ft) #2:
-            <input
+          )}
+          {shape === "kidney" && (
+            <TextField
               type="number"
               id="width2"
               value={width2}
+              label="Width(ft) #2"
               onChange={e => updateWidth2(e.target.value)}
             />
-          </label>
-        )}
-        <label>
-          Average Depth(ft):
-          <input
+          )}
+          <TextField
             type="number"
             id="average-depth"
             value={depth}
+            label="Average Depth(ft)"
             onChange={e => updateDepth(e.target.value)}
           />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-      <p className="total">Total Gallons: {result}</p>
-    </div>
+          <Grid item sm>
+            <Button type="submit" color="primary" variant="contained">
+              Submit
+            </Button>
+          </Grid>
+        </form>
+        <p className="total">Total Gallons: {result}</p>
+      </Grid>
+      <Grid item sm />
+    </Grid>
   );
 };
 
-export default Calculator;
+export default withStyles(styles)(Calculator);
