@@ -1,65 +1,141 @@
 import React, { Component } from "react";
-import axios from "axios";
-// REDUX
-import { connect } from 'react-redux';
-import { getUserData } from '../redux/actions/userActions';
-import { getJobsByDate } from '../redux/actions/dataActions';
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-// Components
-import Profile from '../components/Profile'
-import Job from '../components/Job'
-import DatePicker from '../components/DatePicker'
+//images
+import gpsLogo from "../images/favicon.ico";
+import pool360Logo from "../images/360logo.png";
+import pepLogo from "../images/pepLogo.png";
+import pentairLogo from "../images/pentairLogo.png";
 
-//Helper functions
-import {formatDate, formatTime} from '../util/datetimeHelper'
+// MUI STUFF
+import Button from "@material-ui/core/Button";
+import withStyles from "@material-ui/core/styles/withStyles";
+import GridList from "@material-ui/core/GridList";
+import GridListTile from "@material-ui/core/GridListTile";
+import GridListTileBar from "@material-ui/core/GridListTileBar";
+import IconButton from "@material-ui/core/IconButton";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import InfoIcon from "@material-ui/icons/Info";
 
-
-// MUI
-import Grid from "@material-ui/core/Grid";
+const styles = {
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden"
+  },
+  gridList: {
+    width: 500,
+    height: 450,
+    margin: "auto !important"
+  },
+  title: {
+    color: "#FFFFFF"
+  },
+  icon: {
+    color: "rgba(255, 255, 255, 0.54)"
+  },
+  titleBar: {
+    background:
+      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)"
+  },
+  login: {
+    margin: "auto",
+    width: 300,
+    "& Button": {
+      margin: "auto"
+    }
+  }
+};
 
 export class home extends Component {
-  
-
-  state = {
-    date: formatDate(),
-    time: formatTime()
-  };
-
-  componentDidMount() {
-      let jobReqByDate = {
-          "jobDate": this.state.date
-        }
-      this.props.getJobsByDate(jobReqByDate);
-  }
-
-
-
   render() {
-    let jobMarkup = this.props.data.jobs ? (
-      this.props.data.jobs.map((job, index) => <Job key={index} job={job} />)
-    ) : (
-      <p>Loading</p>
-    );
+    const {
+      classes,
+      user: { loading, authenticated }
+    } = this.props;
+
+    const tileData = [
+      {
+        image: pool360Logo,
+        title: "Pool 360",
+        href: "https://pool360.poolcorp.com/",
+        styles: {
+          maxWidth: 100 + "%"
+        }
+      },
+      {
+        image: pentairLogo,
+        title: "Pentair Rebates",
+        href: "https://www.pentairpartners.com/register/default.aspx",
+        styles: {
+          maxWidth: 100 + "%"
+        }
+      },
+      {
+        image: pepLogo,
+        title: "PEP Website",
+        href: "https://www.pentairpartners.com/register/default.aspx",
+        styles: {
+          maxWidth: 100 + "%"
+        }
+      },
+      {
+        image: gpsLogo,
+        title: "Garys Pool Supplies",
+        href: "https://www.garyspoolsupplies.com/",
+        styles: {
+          margin: "20px 20px 20px 45px"
+        }
+      }
+    ];
+
     return (
-      <Grid container spacing={10}>
-        <Grid item sm={3} xs={12}>
-          <DatePicker />
-        </Grid>
-        <Grid item sm={6} xs={12}>
-          {jobMarkup}
-        </Grid>
-        <Grid item sm={3} xs={12}>
-          <Profile />
-        </Grid>
-      </Grid>
+      <div className="root">
+        <GridList cellHeight={180} className={classes.gridList}>
+          <GridListTile key="Subheader" cols={2} style={{ height: "auto" }}>
+            <ListSubheader component="div">Useful Links</ListSubheader>
+          </GridListTile>
+          {tileData.map(tile => (
+            <GridListTile key={tile.image}>
+              <a href={tile.href}>
+                <img src={tile.image} alt={tile.title} style={tile.styles} />
+              </a>
+              <GridListTileBar
+                title={tile.title}
+                actionIcon={
+                  <IconButton
+                    aria-label={`info about ${tile.title}`}
+                    className={classes.icon}
+                  >
+                    <InfoIcon />
+                  </IconButton>
+                }
+              />
+            </GridListTile>
+          ))}
+        </GridList>
+        {!authenticated && (
+          <div className={classes.login}>
+            <Button
+              className={classes.login}
+              variant="contained"
+              color="primary"
+              component={Link}
+              to="/login"
+            >
+              Employee Login
+            </Button>
+          </div>
+        )}
+      </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
-  data: state.data
+  user: state.user
 });
 
-
-export default connect(mapStateToProps, { getJobsByDate, getUserData })(home);
+export default connect(mapStateToProps)(withStyles(styles)(home));

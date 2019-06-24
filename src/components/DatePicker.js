@@ -1,19 +1,15 @@
-import 'date-fns';
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import DateFnsUtils from '@date-io/date-fns';
+import "date-fns";
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+  KeyboardDatePicker
+} from "@material-ui/pickers";
 
-const useStyles = makeStyles({
-  grid: {
-    width: '60%',
-  },
-});
+const useStyles = makeStyles({});
 
 export default function MaterialUIPickers() {
   // The first commit of Material-UI
@@ -22,8 +18,8 @@ export default function MaterialUIPickers() {
   const classes = useStyles();
 
   function handleDateChange(date) {
-		setSelectedDate(date);
-		console.log(date);
+    setSelectedDate(date);
+    console.log(date);
   }
 
   return (
@@ -36,7 +32,7 @@ export default function MaterialUIPickers() {
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
-            'aria-label': 'change date',
+            "aria-label": "change date"
           }}
         />
         <KeyboardTimePicker
@@ -46,7 +42,7 @@ export default function MaterialUIPickers() {
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{
-            'aria-label': 'change time',
+            "aria-label": "change time"
           }}
         />
       </Grid>
