@@ -20,15 +20,15 @@ const styles = {
 
 class Customer extends Component {
 	render() {
-		const { classes, customer: {name, customerId, address, phoneNum} } = this.props
+		const { classes, customer: { address, customerId, name, phoneNum} } = this.props
 		return (
 			<Card className={classes.card}>
 				<CardContent className={classes.content}>
-					<Typography variant="h5" color="primary" component={Link} to={`/customers/${customerId}`}>
-							{name}
+					<Typography variant="h5" color="primary" component={Link} to={`/customer/${customerId}`}>
+						{name}
 					</Typography>
-					<Typography variant="body2" color="textSecondary">ID: {customerId}</Typography>
-					<Typography variant="body2" color="textSecondary">Address: {address}</Typography>
+					<Typography variant="body2" color="textSecondary">ID: {customerId} </Typography>
+					<Typography variant="body2" color="textSecondary">Address: {address} </Typography>
 					<Typography variant="body2" color="textSecondary">Phone Number: {phoneNum}</Typography>
 				</CardContent>
 			</Card>

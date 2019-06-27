@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import {formatDate} from '../util/datetimeHelper';
 
 //images
 import gpsLogo from "../images/favicon.ico";
@@ -27,6 +28,8 @@ export class Navbar extends Component {
   render() {
     const { classes, user: authenticated } = this.props;
 
+   let date = formatDate();
+
     return (
       <AppBar position="fixed" className={classes.navBar}>
         <img src={gpsLogo} alt="company logo" className={classes.companyLogo} />
@@ -35,7 +38,7 @@ export class Navbar extends Component {
             Home
           </Button>
           {authenticated && (
-            <Button color="inherit" component={Link} to="/jobs">
+            <Button color="inherit" component={Link} to={`/jobs/${date}`}>
               Jobs
             </Button>
           )}

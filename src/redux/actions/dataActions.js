@@ -1,4 +1,4 @@
-import { SET_JOBS, LOADING_JOBS, SET_ERRORS, CLEAR_ERRORS, LOADING_UI} from '../types';
+import { SET_JOBS, LOADING_JOBS, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_CUSTOMER, LOADING_CUSTOMER} from '../types';
 import axios from 'axios';
 
 
@@ -17,7 +17,27 @@ export const getJobsByDate = (jobDate) => dispatch => {
 		.catch(err => {
 			dispatch({
 				type: SET_ERRORS,
-				payload: []
+				payload: err.response.data
+			})
+		});
+}
+
+export const getCustomer = (customerId) => dispatch => {
+	console.log(customerId);
+	axios
+		.get(`/customers/${customerId}`)
+		.then(res => {
+			console.log(res.data);
+			dispatch({ type: LOADING_CUSTOMER});
+			dispatch({
+				type: SET_CUSTOMER,
+				payload: res.data
+			})
+		})
+		.catch(err => {
+			dispatch({
+				type: SET_ERRORS,
+				payload: err.response.data
 			})
 		});
 }

@@ -83,10 +83,8 @@ class Profile extends Component {
                 color="primary"
                 variant="h5"
               >
-                @{handle}
+                User: {handle}
               </MuiLink>
-              <hr />
-              <Typography variant="body2">{createdAt}</Typography>
             </div>
           </div>
         </Paper>

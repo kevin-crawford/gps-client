@@ -1,9 +1,10 @@
-import { SET_JOBS, LOADING_JOBS} from '../types';
+import { SET_JOBS, LOADING_JOBS, SET_CUSTOMER, LOADING_CUSTOMER} from '../types';
 
 const initialState = {
 	loading: false,
 	jobs: [],
-	job: {}
+	job: {},
+	customer: {}
 };
 
 export default function(state = initialState, action) {
@@ -15,6 +16,17 @@ export default function(state = initialState, action) {
 				jobs: action.payload
 			};
 		case LOADING_JOBS:
+			return {
+				...state,
+				loading: true
+			};
+		case SET_CUSTOMER:
+			return {
+				...state,
+				loading: false,
+				customer: action.payload
+			};
+		case LOADING_CUSTOMER:
 			return {
 				...state,
 				loading: true

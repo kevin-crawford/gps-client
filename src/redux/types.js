@@ -13,6 +13,10 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 export const SET_JOBS = 'SET_JOBS';
 export const LOADING_JOBS = 'LOADING_JOBS';
+export const SET_CUSTOMER = 'SET_CUSTOMER';
+export const LOADING_CUSTOMER = 'LOADING_CUSTOMER';
+
+
 
 
 
