@@ -15,27 +15,38 @@ import { formatTime } from "../util/datetimeHelper";
 // MUI
 import Grid from "@material-ui/core/Grid";
 
-export class home extends Component {
+export class singleDay extends Component {
   state = {
     date: this.props.match.params.date,
     time: formatTime()
   };
 
   componentDidMount() {
-    let jobReqByDate = {
-      jobDate: this.state.date
-    };
-    this.props.getJobsByDate(jobReqByDate);
+    this.props.getJobsByDate(this.state.date);
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log(prevProps);
+    if (this.props.match.params.date !== prevProps.match.params.date) {
+      this.setState({
+        date: this.props.match.params.date
+      });
+      this.props.getJobsByDate(this.props.match.params.date);
+    }
   }
 
   render() {
-    console.log(this.props.data.jobs)
+    console.log(this.props.data.jobs);
     // if there is jobs , load jobs, else show a loading indicator
-    let jobMarkup = this.props.data.jobs.length ? this.props.data.jobs ? (
-      this.props.data.jobs.map((job, index) => <Job key={index} job={job} />)
+    let jobMarkup = this.props.data.jobs.length ? (
+      this.props.data.jobs ? (
+        this.props.data.jobs.map((job, index) => <Job key={index} job={job} />)
+      ) : (
+        <p>Loading..</p>
+      )
     ) : (
-      <p>Loading..</p>
-    ) : (<div>No Jobs Found</div>);
+      <div>No Jobs Found</div>
+    );
 
     return (
       <Grid container spacing={5}>
@@ -43,7 +54,7 @@ export class home extends Component {
           <Profile />
         </Grid>
         <Grid item sm={8} xs={12}>
-           {jobMarkup}
+          {jobMarkup}
         </Grid>
       </Grid>
     );
@@ -58,4 +69,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getJobsByDate, getUserData }
-)(home);
+)(singleDay);

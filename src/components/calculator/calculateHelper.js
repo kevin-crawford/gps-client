@@ -1,4 +1,10 @@
-function calculatePoolVolume(length, width, width2, depth, shape) {
+export default function calculatePoolVolume(
+  length,
+  width,
+  width2,
+  depth,
+  shape
+) {
   console.log("Calculating...");
 
   let result;
@@ -7,7 +13,7 @@ function calculatePoolVolume(length, width, width2, depth, shape) {
     console.log("pool is square");
   }
 
-  if (shape === "circular") {
+  if (shape === "circle") {
     console.log("pool is circular");
     let radius = length / 2;
     result = 3.14 * Math.pow(radius, 2) * depth * 7.5;
@@ -21,5 +27,3 @@ function calculatePoolVolume(length, width, width2, depth, shape) {
   }
   return result;
 }
-
-export default calculatePoolVolume;

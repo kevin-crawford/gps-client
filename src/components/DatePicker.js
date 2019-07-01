@@ -3,6 +3,8 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import DateFnsUtils from "@date-io/date-fns";
+import { convertDate } from "../util/datetimeHelper";
+import { withRouter } from "react-router";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -11,16 +13,26 @@ import {
 
 const useStyles = makeStyles({});
 
-export default function MaterialUIPickers() {
+export function MaterialUIPickers(props) {
   // The first commit of Material-UI
-  const [selectedDate, setSelectedDate] = React.useState(new Date());
+  let dateFromURL = props.match.params.date;
+  let dateForState = dateFromURL.replace(/-/g, "/");
+
+  const [selectedDate, setSelectedDate] = React.useState(
+    new Date(dateForState)
+  );
 
   const classes = useStyles();
 
   function handleDateChange(date) {
+    let formattedDate = convertDate(date.toString());
     setSelectedDate(date);
-    console.log(date);
+    handlePageLoad(formattedDate);
   }
+
+  const handlePageLoad = date => {
+    props.history.push(`/jobs/${date}`);
+  };
 
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -49,3 +61,5 @@ export default function MaterialUIPickers() {
     </MuiPickersUtilsProvider>
   );
 }
+
+export default withRouter(MaterialUIPickers);

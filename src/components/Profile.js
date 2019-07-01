@@ -73,7 +73,7 @@ class Profile extends Component {
         <Paper className={classes.paper}>
           <div className={classes.profile}>
             <div className="date-selector">
-              <DatePicker />
+              <DatePicker {...this.props} />
             </div>
             <hr />
             <div className="profile-details">

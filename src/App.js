@@ -7,7 +7,6 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import themeFile from "./util/theme";
 import jwtDecode from "jwt-decode";
 
-
 //redux
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -18,12 +17,12 @@ import { logoutUser, getUserData } from "./redux/actions/userActions";
 import home from "./pages/home";
 import login from "./pages/login";
 import singleDay from "./pages/singleDay";
-import CustomerPage from './pages/customerPage';
+import CustomerPage from "./pages/customerPage";
+import singleJob from "./pages/singleJob";
 
 //components
 import Navbar from "./components/Navbar";
 import Calculator from "./components/calculator";
-import Job from './components/Job'
 import AuthRoute from "./util/AuthRoute";
 
 const theme = createMuiTheme(themeFile);
@@ -59,7 +58,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={home} />
               <Route exact path="/jobs/:date" component={singleDay} />
-              <Route exact path="/job/:id" component={Job} />
+              <Route exact path="/job/:id" component={singleJob} />
               <Route exact path="/customer/:id" component={CustomerPage} />
               <Route exact path="/calculator" component={Calculator} />
               <AuthRoute exact path="/login" component={login} />
