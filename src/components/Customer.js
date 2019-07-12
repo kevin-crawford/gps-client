@@ -25,7 +25,7 @@ class Customer extends Component {
     } = this.props;
     return (
       <Card className={classes.card}>
-        {this.props.customer.length ? (
+        {this.props.customer ? (
           <CardContent className={classes.content}>
             <Typography
               variant="h5"

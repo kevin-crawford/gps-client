@@ -24,6 +24,7 @@ import singleJob from "./pages/singleJob";
 import Navbar from "./components/Navbar";
 import Calculator from "./components/calculator";
 import AuthRoute from "./util/AuthRoute";
+import DatePicker from "./components/DatePicker";
 
 const theme = createMuiTheme(themeFile);
 

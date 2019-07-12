@@ -24,7 +24,7 @@ class Job extends Component {
     const {
       classes,
       job: {
-        customer,
+        customer: { address, customerId, phoneNum, name },
         createdAt,
         comments,
         description,
@@ -43,22 +43,22 @@ class Job extends Component {
               component={Link}
               to={`/job/${jobId}`}
             >
-              {customer.address}
+              {address}
             </Typography>
           </div>
           <Typography
             variant="body2"
             color="textSecondary"
             component={Link}
-            to={`/customer/${customer.customerId}`}
+            to={`/customer/${customerId}`}
           >
-            Name: {customer.name}
+            Name: {name}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            Address: {customer.address}
+            Address: {address}
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            Phone Number: {customer.phoneNum}
+            Phone Number: {phoneNum}
           </Typography>
           <br />
           <Typography variant="body2" color="textSecondary">
