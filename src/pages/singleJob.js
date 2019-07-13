@@ -4,7 +4,6 @@ import { getJob } from "../redux/actions/dataActions";
 
 // components
 import Job from "../components/Job";
-import { SET_AUTHENTICATED } from "../redux/types";
 
 export class singleJob extends React.Component {
   componentDidMount() {

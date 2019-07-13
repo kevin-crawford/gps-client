@@ -1,6 +1,7 @@
 import {
   SET_JOBS,
   SET_JOB,
+  POST_JOB,
   LOADING_JOBS,
   SET_ERRORS,
   CLEAR_ERRORS,
@@ -67,9 +68,27 @@ export const getJob = jobId => dispatch => {
     });
 };
 
-// export const postJob = newJob => dispatch => {
-
-// }
+export const postJob = newJob => dispatch => {
+  console.log(newJob)
+  dispatch({ type: LOADING_JOBS });
+  axios
+    .post('/jobs', newJob)
+    .then(res => {
+      console.log(res.data)
+      dispatch({
+        type: POST_JOB,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch( err => {
+        dispatch({
+          type: SET_ERRORS,
+          payload: err.response
+        })
+      })
+    })
+}
 
 // export const deleteJob = jobId => dispatch {
 

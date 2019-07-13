@@ -8,6 +8,7 @@ import { getJobsByDate } from "../redux/actions/dataActions";
 // Components
 import Profile from "../components/Profile";
 import Job from "../components/Job";
+import JobCreatorModal from '../components/JobCreatorModal';
 
 //Helper functions
 import { formatTime } from "../util/datetimeHelper";
@@ -52,6 +53,7 @@ export class singleDay extends Component {
       <Grid container spacing={5}>
         <Grid item sm={4} xs={12}>
           <Profile />
+          <JobCreatorModal date={this.state.date}/>
         </Grid>
         <Grid item sm={8} xs={12}>
           {jobMarkup}

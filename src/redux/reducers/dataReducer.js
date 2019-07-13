@@ -1,6 +1,7 @@
 import {
   SET_JOBS,
   SET_JOB,
+  POST_JOB,
   LOADING_JOBS,
   SET_CUSTOMER,
   LOADING_CUSTOMER
@@ -26,6 +27,11 @@ export default function(state = initialState, action) {
         ...state,
         loading: false,
         job: action.payload
+      };
+    case POST_JOB:
+      return {
+        ...state,
+        jobs: [...state.jobs, action.payload]
       };
     case LOADING_JOBS:
       return {
